@@ -1,4 +1,7 @@
 require './versions/ruby_2_4'
+require './versions/ruby_2_0'
+require './versions/ruby_1_9'
+require './versions/ruby_1_8'
 class GetStat
 	def initialize(*args)
 		@strings_count = args[0]
@@ -36,12 +39,12 @@ end
 
 # https://www.speedshop.co/2017/03/09/a-guide-to-gc-stat.html
 objects_amount = (ARGV[0] || 30000).to_i
-
+puts "RUBY version is  #{RUBY_VERSION}"
 d = case RUBY_VERSION
 	when /2\.[1-4]\.\d/ #ruby 2.4
 		GetStat.new(objects_amount,100, 0).extend(Ruby_2_4)
-	when /2\.[0]\.\d/ #ruby 2.1
-		GetStat.new(objects_amount).extend(Ruby_2_1)
+	when /2\.0\.\d/ #ruby 2.1
+		GetStat.new(objects_amount).extend(Ruby_2_0)
 	when /1\.9\.\d/ #ruby 1.9
 		GetStat.new(objects_amount).extend(Ruby_1_9)
 	else
